@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BusinessSearch</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <% if current_user %>
+            <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link' %>
+          </li>
+        <% end %>
+      </ul>
+
+      <div class="float-right">
+        <%= form_tag change_user_path do  %>
+          <div class="form-group">
+            <i class="fa fa-user"></i>
+            <%= select_tag :user, options_for_select(User.all.order(:id).map { |user| [user.email, user.id] }, current_user&.id), onchange: "this.form.submit();" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+  <div class="col">
+    <%= yield %>
+  </div>
+</body>
+</html>

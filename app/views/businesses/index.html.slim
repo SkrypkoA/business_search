@@ -1,0 +1,35 @@
+.col
+  .row
+    .col.col-md-10
+      = form_tag businesses_path, method: :get do |f|
+        h5 Seach type
+        .form-group
+          = radio_button_tag :search_type, :all, params[:search_type].blank? || params[:search_type] == 'all'
+          = label_tag :all
+          = radio_button_tag :search_type, :google, params[:search_type] == 'google'
+          = label_tag :google
+          = radio_button_tag :search_type, :database, params[:search_type] == 'database'
+          = label_tag :database
+        .form-group.w-100
+          .input-group
+            .input-group-prepend
+              span.input-group-text
+                i.fa.fa-search
+            = select_tag :address, nil, class: 'form-control search-autocomplete'
+    .col.col-md-2
+      = form_for @business, html: { class: 'h-100 d-flex align-items-end p-3' } do |f|
+        = f.hidden_field :place_id
+        = f.hidden_field :id
+        = f.submit "Claim Business", class: 'm-2'
+  .row
+    .col
+      .row
+        .col.text-center
+          h5 My Claimed Businesses
+      .row
+        .businesses-list
+          - current_user.businesses.each do |business|
+            .row
+              .col
+                i.fa.fa-building.text-danger.mr-2
+                = business.full_address

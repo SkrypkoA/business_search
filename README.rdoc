@@ -1,0 +1,11 @@
+== README
+Ruby 2.4.6
+Rails 4.2.10
+
+Install:
+1. Setup config/database.yml by database.example.yml
+2. Setup .env by evn.example
+3. bundle install
+4. rails db:create
+5. rails db:migrate
+6. rails s
